@@ -49,9 +49,12 @@ class State(pc.State):
                 forks_element = repo.find(
                     'a', href=lambda href:href and '/forks' in href
                 )
+                
                 forks_count = forks_element.text.strip()
 
-                print(stars_count, forks_count )
+                self.repositories.append(
+                    [name, subtitle, stars_count, forks_count]
+                )
 
 
 
@@ -59,6 +62,28 @@ class State(pc.State):
 
 def create_options(name):
     return pc.radio(name)
+
+
+def create_repo_detals(data):
+    return pc.hstack(
+        pc.vstack(
+            pc.container(
+                pc.image(
+                    src='https://img.icons8.com/material-rounded/384/github.png',
+                    width = '28px',
+                    height = 'auto',
+                ),
+                padding ='8',
+                display = 'flex',
+            )
+        ),
+        pc.vstack(
+            pc.container(
+                pc.tooltip(data=[0], label=data[1], gutter =50),
+            )
+        )
+    )
+
 
 
 def index() -> pc.Component:
@@ -107,6 +132,10 @@ def index() -> pc.Component:
             pc.spacer(),
             pc.spacer(),
             pc.hstack(
+                pc.foreach(
+                    State.repositories,
+                    create_repo_detals,
+                ),
                 spacing ='1.5rem',
             )
 
