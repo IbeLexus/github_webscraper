@@ -64,25 +64,56 @@ def create_options(name):
     return pc.radio(name)
 
 
-def create_repo_detals(data):
+def create_repo_details(data):
     return pc.hstack(
         pc.vstack(
             pc.container(
                 pc.image(
                     src='https://img.icons8.com/material-rounded/384/github.png',
-                    width = '28px',
-                    height = 'auto',
+                    width='28px',
+                    height='auto',
                 ),
-                padding ='8',
-                display = 'flex',
-            )
+                padding='4',
+                display='flex',
+            ),
         ),
         pc.vstack(
             pc.container(
-                pc.tooltip(data=[0], label=data[1], gutter =50),
-            )
-        )
+                pc.tooltip(
+                    pc.text(data[0], align='left'),
+                    label=data[1],
+                    gutter=50,
+                ),
+                padding='0',
+            ),
+            pc.container(
+                pc.hstack(
+                    pc.image(
+                        src='https://img.icons8.com/ios-filled/100/star--v1.png',
+                        width='12px',
+                        height='auto',
+                    ),
+                    pc.text(data[2], align='left'),
+                    pc.image(
+                        src='https://img.icons8.com/ios/100/wishbone.png',
+                        width='12px',
+                        height='auto',
+                    ),
+                    pc.text(data[3], align='left'),
+                ),
+                padding='0',
+            ),
+        ),
+        box_shadow='lg',
+        padding='12px',
+        border_radius='6px',
+        bg='white',
     )
+
+        
+        
+    
+
 
 
 
@@ -134,7 +165,7 @@ def index() -> pc.Component:
             pc.hstack(
                 pc.foreach(
                     State.repositories,
-                    create_repo_detals,
+                    create_repo_details,
                 ),
                 spacing ='1.5rem',
             )
